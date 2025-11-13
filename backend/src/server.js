@@ -7,7 +7,7 @@ const app = express();
 const PORT = ENV?.PORT || 5500;
 
 //stuffs
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 // middlewares
 
 // app.use(express.static(path.join(__dirname, "../frontend/dist")))
