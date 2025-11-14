@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import ENV from "./lib/env.js";
 import connectDB from "./database/database.js";
-import serve from "inngest/express";
+import { serve } from "inngest/express";
 import { functions, inngest } from "./lib/inngest.js";
 const app = express();
 const PORT = ENV?.PORT || 3000;
