@@ -24,6 +24,8 @@ const startServer = async () => {
   try {
     await connectDB();
     app.listen(PORT, () => console.log("server is connected to Port:", PORT));
+    console.log("Event Key:", ENV.INNGEST_EVENT_KEY);
+    console.log("Signing Key:", ENV.INNGEST_SIGNING_KEY);
   } catch (error) {
     console.error("Errror starting the server", error);
   }
