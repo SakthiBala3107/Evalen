@@ -3,7 +3,7 @@ import ENV from "../lib/env.js";
 
 const connectDB = async () => {
   try {
-    if (ENV.DB_URL) {
+    if (!ENV?.DB_URL) {
       throw new Error("DB_URL is not defined in the ENV");
     }
 
