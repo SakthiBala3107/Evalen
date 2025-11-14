@@ -1,5 +1,5 @@
 import { Inngest } from "inngest";
-import { connectDB } from "../database/database.js";
+import connectDB from "../database/database.js";
 import User from "../models/User.model.js";
 
 export const inngest = new Inngest({ id: "evalen" });
