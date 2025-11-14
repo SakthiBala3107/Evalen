@@ -1,29 +1,24 @@
-import { Inngest } from "inngest";
-
 import connectDB from "../database/database.js";
 import User from "../models/User.model.js";
 import ENV from "./env.js";
+import { Inngest } from "inngest";
 
-export const inngest = new Inngest({
-  id: "evalen",
-  signingKey: ENV.INNGEST_SIGNING_KEY,
-  eventKey: ENV.INNGEST_EVENT_KEY,
-});
+export const inngest = new Inngest({ id: "talent-iq" });
 
-// rest of your functions
 const syncUser = inngest.createFunction(
   { id: "sync-user" },
-  { event: "clerk/user.create" },
+  { event: "clerk/user.created" },
   async ({ event }) => {
     await connectDB();
+
     const { id, email_addresses, first_name, last_name, image_url } =
       event.data;
 
     const newUser = {
       clerkId: id,
-      email: email_addresses[0]?.email_address, // ✅ fix here
+      email: email_addresses[0]?.email_address,
       name: `${first_name || ""} ${last_name || ""}`,
-      profileImage: image_url || "",
+      profileImage: image_url,
     };
 
     await User.create(newUser);
@@ -32,11 +27,14 @@ const syncUser = inngest.createFunction(
 
 const deleteUserFromDB = inngest.createFunction(
   { id: "delete-user-from-db" },
-  { event: "clerk/user.delete" },
+  { event: "clerk/user.deleted" },
   async ({ event }) => {
     await connectDB();
+
     const { id } = event.data;
     await User.deleteOne({ clerkId: id });
+
+    // await deleteStreamUser(id.toString());
   }
 );
 
