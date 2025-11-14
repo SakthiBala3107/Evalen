@@ -15,6 +15,10 @@ app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use("/api/inngest", serve({ client: inngest, functions }));
 // 1.58.47-> qadd our prodution apps url /api/inngest  in the inngest->apps->synce new app
 
+app.get("/", (req, res) => {
+  res.json({ mesg: "Your are in  homepage of Evalen " });
+});
+
 // SERVER
 const startServer = async () => {
   try {
