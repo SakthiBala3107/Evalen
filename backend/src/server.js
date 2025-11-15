@@ -10,6 +10,7 @@ import ENV from "./lib/env.js";
 import connectDB from "./database/database.js";
 import { ProtectRoute } from "./middlewares/protectRoute.js";
 import chatRouter from "./routes/chatRoutes.js";
+import sessionRouter from "./routes/sessionRoutes.js";
 
 // import chatRoutes from "./routes/chatRoutes.js";
 // import sessionRoutes from "./routes/sessionRoute.js";
@@ -27,6 +28,7 @@ app.use(clerkMiddleware()); // this adds auth field to request object: req.auth(
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.use("/api/routes", chatRouter);
+app.use("/api/sessions", sessionRouter);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ msg: "api is up and running" });
