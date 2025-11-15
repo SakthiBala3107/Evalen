@@ -8,6 +8,8 @@ import { inngest, functions } from "./lib/inngest.js";
 //
 import ENV from "./lib/env.js";
 import connectDB from "./database/database.js";
+import { ProtectRoute } from "./middlewares/protectRoute.js";
+import chatRouter from "./routes/chatRoutes.js";
 
 // import chatRoutes from "./routes/chatRoutes.js";
 // import sessionRoutes from "./routes/sessionRoute.js";
@@ -24,10 +26,14 @@ app.use(clerkMiddleware()); // this adds auth field to request object: req.auth(
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
+app.use("/api/routes", chatRouter);
+
 app.get("/health", (req, res) => {
   res.status(200).json({ msg: "api is up and running" });
 });
-
+app.get("/books", ProtectRoute, (req, res) => {
+  res.status(200).json({ msg: "api is up and running" });
+});
 // make our app ready for deployment
 // if (ENV.NODE_ENV === "production") {
 //   app.use(express.static(path.join(__dirname, "../frontend/dist")));
